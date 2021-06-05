@@ -7,29 +7,44 @@ import java.util.Scanner;
  */
 
 public class exercise17 {
-    public static double bacCalc(int numDrinks, double W, int gender, double hoursSince){
+
+    static Scanner input = new Scanner(System.in);
+
+    //method to calculate bac using the given formula.
+    public static double bacCalc(double numDrinks, double W, double gender, double hoursSince){
         double r = (gender==1)?0.73:0.66;
-        double BAC = (numDrinks * 5.14 / W * r) - 0.015 * hoursSince;
-        return BAC;
+        return (numDrinks * 5.14 / W * r) - 0.015 * hoursSince;
+    }
+
+    //method to prevent user from entering non-numeric values.
+    public static double numericInputOnly(){
+        while(true){
+            try {
+                return Double.parseDouble(input.nextLine());
+            }
+            catch(NumberFormatException e){
+                System.out.print("Invalid input, please enter a number: ");
+            }
+        }
     }
 
     public static void main(String[] args){
-        Scanner input = new Scanner(System.in);
 
         System.out.print("Enter your weight in pounds: ");
-        double weight = input.nextDouble();
+        double weight = numericInputOnly();
 
         System.out.print("Enter your gender (1 for male, 2 for female): ");
-        int gender = input.nextInt();
+        double gender = numericInputOnly();
         while((gender != 1) && (gender != 2)){
             System.out.print("Invalid gender selection. Enter 1 for male, 2 for female: ");
-            gender = input.nextInt();
+            gender = input.nextDouble();
         }
 
         System.out.print("How much alcohol have you consumed? (in ounces)");
-        int numDrinks = input.nextInt();
+        double numDrinks = numericInputOnly();
+
         System.out.print("How many hours ago was your last drink? ");
-        double hoursSince = input.nextDouble();
+        double hoursSince = numericInputOnly();
 
         double yourBAC = bacCalc(numDrinks, weight, gender, hoursSince);
 
